@@ -30,22 +30,6 @@ enum NFTState {
         SAD
     }
 
-contract MintHappyMoodNFT is Script {
-    
-    function run() external
-    {
-        address mostRecentDeployed = DevOpsTools.get_most_recent_deployment("MoodNFT", block.chainid);
-        console.log("Most recent deployment of MoodNFT: ", mostRecentDeployed);
-        mintNFTOnContract(mostRecentDeployed);
-    }
-
-    function mintNFTOnContract(address moodNFTAddress) public {
-        vm.startBroadcast();
-        MoodNFT(moodNFTAddress).mintNFT(uint(NFTState.HAPPY));
-        vm.stopBroadcast();
-    }
-}
-
 contract MintSadMoodNFT is Script {
     
     function run() external
@@ -58,6 +42,22 @@ contract MintSadMoodNFT is Script {
     function mintNFTOnContract(address moodNFTAddress) public {
         vm.startBroadcast();
         MoodNFT(moodNFTAddress).mintNFT(uint(NFTState.SAD));
+        vm.stopBroadcast();
+    }
+}
+
+contract MintHappyMoodNFT is Script {
+    
+    function run() external
+    {
+        address mostRecentDeployed = DevOpsTools.get_most_recent_deployment("MoodNFT", block.chainid);
+        console.log("Most recent deployment of MoodNFT: ", mostRecentDeployed);
+        mintNFTOnContract(mostRecentDeployed);
+    }
+
+    function mintNFTOnContract(address moodNFTAddress) public {
+        vm.startBroadcast();
+        MoodNFT(moodNFTAddress).mintNFT(uint(NFTState.HAPPY));
         vm.stopBroadcast();
     }
 }
